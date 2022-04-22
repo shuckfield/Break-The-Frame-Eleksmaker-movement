@@ -1,0 +1,13 @@
+#!/bin/bash
+# A simple script to home the Eleksmaker and then send it the gcode file in /boot/movement.gcode
+
+echo '$H' > /dev/ttyUSB0
+
+# Loop forever (or until the Pi gets turned off)
+while [ true ]
+do
+        # Send the GCode
+        python3 -m src.gcodesender /dev/ttyUSB0 -f /boot/movement.gcode
+        # Wait for a few seconds before starting again
+        sleep 10
+done
