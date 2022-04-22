@@ -17,15 +17,21 @@ sleep 60
 # be at machine coordinates of [-380,-260]
 # This command will set the coordinate system for general use, 'G54' will select it
 echo 'G10 L2 P1 X-380Y-260' > /dev/ttyUSB0
+# Move to the front left corner, as that's the origin we want gcodesender to use
+echo 'G0 X0Y0' > /dev/ttyUSB0
+sleep 10
 
 # Loop forever (or until the Pi gets turned off)
 while [ true ]
 do
         # gcodesender sets the current position to 0,0 with a G92 command
         # so to ensure we don't drift, we should go back to 0,0 beforehand
+        # Reset the offset
+        echo 'G92.1' > /dev/ttyUSB0
+        # Move to 0,0 so gcodesender uses that as its origin for the offset it sets
         echo 'G0 X0Y0' > /dev/ttyUSB0
-        # Send the GCode
-        python3 -m src.gcodesender /dev/ttyUSB0 -f /boot/movement.gcode
         # Wait for a few seconds before starting again
         sleep 10
+        # Send the GCode
+        python3 -m src.gcodesender /dev/ttyUSB0 -f /boot/movement.gcode
 done
