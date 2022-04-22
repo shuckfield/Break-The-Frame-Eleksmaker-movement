@@ -28,4 +28,45 @@ Main assembly is an Eleksmaker plotter.
    * A small 7x12 hole piece of veroboard
 1. Mount the limit switches
 1. Connect each limit switch to the relevant 2-way terminal made in step 3
+1. Upgrade the firmware on the on-board Arduino Nano (programmed using the traditional bootloader option) to use [GRBL](https://github.com/gnea/grbl) v1.1h (we used a version with the [spindle control modifications for servo](https://github.com/DWiskow/grbl1-1g-Servo) but the servo feature is not used at present)
+   1. Check out the `break-the-frame` branch of the [MCQN fork of GRBL](https://github.com/mcqn/grbl/tree/break-the-frame)
+   1. Build it by running `make`
+   1. Upload it to the Arduino: `avrdude -Cavrdude.conf -v -patmega328p -carduino -P/dev/ttyUSB0 -b57600 -D -Uflash:w:grbl.hex:i` (If you have the Arduino IDE installed that will include a suitable version of `avrdude` and `avrdude.conf`)
+1. Set the GRBL settings to match these:
+```
+$0=10
+$1=25
+$2=0
+$3=0
+$4=0
+$5=0
+$6=0
+$10=1
+$11=0.010
+$12=0.002
+$13=0
+$20=0
+$21=1
+$22=1
+$23=0
+$24=25.000
+$25=500.000
+$26=250
+$27=1.000
+$30=255
+$31=0
+$32=0
+$100=80.000
+$101=80.000
+$102=80.000
+$110=5000.000
+$111=5000.000
+$112=5000.000
+$120=200.000
+$121=200.000
+$122=200.000
+$130=350.000
+$131=230.000
+$132=200.000
+```
 
