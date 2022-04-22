@@ -1,11 +1,29 @@
 #!/bin/bash
 # A simple script to home the Eleksmaker and then send it the gcode file in /boot/movement.gcode
 
+# Home the machine, so we know where we are
 echo '$H' > /dev/ttyUSB0
+# Give enough time for the homing process to finish
+# From the opposite corner it takes ~51s, give a few more for good measure
+sleep 60
+
+# The bed is 380mm wide by 260mm high.
+# The x-axis increases positively as it moves to the right
+# The y-axis increases positively as it moves towards the back (the opposite to SVG coordinates)
+# Machine coordinates for the plotter are negative (so it's easy to spot
+# non-machine coordinates, as they'll generally be positive), so the back
+# right corner where it homes will be at [0,0] in machine coordinates
+# To set [0,0] for the general usage to be the front-left corner of that will
+# be at machine coordinates of [-380,-260]
+# This command will set the coordinate system for general use, 'G54' will select it
+echo 'G10 L2 P1 X-380Y-260' > /dev/ttyUSB0
 
 # Loop forever (or until the Pi gets turned off)
 while [ true ]
 do
+        # gcodesender sets the current position to 0,0 with a G92 command
+        # so to ensure we don't drift, we should go back to 0,0 beforehand
+        echo 'G0 X0Y0' > /dev/ttyUSB0
         # Send the GCode
         python3 -m src.gcodesender /dev/ttyUSB0 -f /boot/movement.gcode
         # Wait for a few seconds before starting again
