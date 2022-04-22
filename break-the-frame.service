@@ -1,0 +1,24 @@
+# systemd service file to run the Break the Frame GCode sender
+
+[Unit]
+Description=Break the Frame GCode sender
+Wants=local-fs.target
+
+[Service]
+Type=simple
+# Run as normal pi user - feel free to change...
+User=sophie
+Group=sophie
+Nice=5
+WorkingDirectory=/home/sophie/Break-The-Frame-Eleksmaker-movement/software/gcodesender
+ExecStart=/home/sophie/Break-The-Frame-Eleksmaker-movement/software/loop-move
+# Use SIGINT to stop
+KillSignal=SIGINT
+# Auto restart on crash
+Restart=on-failure
+# Tag things in the log
+SyslogIdentifier=Break-the-Frame
+#StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target
