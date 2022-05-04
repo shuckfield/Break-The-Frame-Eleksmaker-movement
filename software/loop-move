@@ -3,10 +3,11 @@
 
 echo "Let's go home"
 # Home the machine, so we know where we are
-echo -e '\x18\r\n\r\n$H' > /dev/ttyUSB0
+#echo -e '\x18\r\n\r\n$H' > /dev/ttyUSB0
+python3 /home/sophie/Break-The-Frame-Eleksmaker-movement/software/init.py
 # Give enough time for the homing process to finish
 # From the opposite corner it takes ~51s, give a few more for good measure
-sleep 60
+#sleep 60
 
 # The bed is 380mm wide by 260mm high.
 # The x-axis increases positively as it moves to the right
@@ -18,9 +19,9 @@ sleep 60
 # be at machine coordinates of [-380,-260]
 # This command will set the coordinate system for general use, 'G54' will select it
 echo "Set the coordinates"
-echo 'G10 L2 P1 X-380Y-260' > /dev/ttyUSB0
+#echo 'G10 L2 P1 X-380Y-260' > /dev/ttyUSB0
 # Move to the front left corner, as that's the origin we want gcodesender to use
-echo 'G0 X0Y0' > /dev/ttyUSB0
+#echo 'G0 X0Y0' > /dev/ttyUSB0
 sleep 10
 
 # Loop forever (or until the Pi gets turned off)
@@ -31,11 +32,12 @@ do
         # Reset the offset
         echo "Reset the offset"
         echo 'G92.1' > /dev/ttyUSB0
+        sleep 1
         # Move to 0,0 so gcodesender uses that as its origin for the offset it sets
         echo 'G0 X0Y0' > /dev/ttyUSB0
         # Wait for a few seconds before starting again
         sleep 10
         # Send the GCode
-        echo "Role the tape!"
+        echo "Roll the tape!"
         python3 -m src.gcodesender /dev/ttyUSB0 -f /boot/movement.gcode
 done
