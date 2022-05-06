@@ -10,8 +10,8 @@ Type=simple
 User=sophie
 Group=sophie
 Nice=5
-WorkingDirectory=/home/sophie/Break-The-Frame-Eleksmaker-movement/software/gcodesender
-ExecStart=/home/sophie/Break-The-Frame-Eleksmaker-movement/software/loop-move
+WorkingDirectory=/home/sophie/Break-The-Frame-Eleksmaker-movement/software
+ExecStart=/usr/bin/python3 loop-gcode.py
 # Use SIGINT to stop
 KillSignal=SIGINT
 # Auto restart on crash
