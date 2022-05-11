@@ -22,9 +22,21 @@ The bed is 370mm by 250mm, so the gcode needs to fit into that area.  It's best 
 1. Click `Apply` to generate the Gcode
 1. Open the Gcode file in a text editor and remove the lines with `%` on them at the start and end of the file
 
-### Other options
+###Kirimoto
 
 * [Kirimoto](https://grid.space/kiri/)
+1. Click 'Setup -> Machine' and select 'Laser'
+1. Click 'Customize'
+1. Set 'Width' and 'Depth' to the dimensions of the frame
+1. Delete the text in the 'Laser on' and 'Laser off' tabs
+1. Click 'Save'
+1. Import the SVG file. 'Files -> Import'
+1. In 'Layers' set height to 0
+1. In 'Output' set speed (2000-3000)
+1. Click 'Slice -> Export'    
+
+### Other options
+
 * [JScut.org](http://jscut.org/)
 
 ## Example GCode Files
