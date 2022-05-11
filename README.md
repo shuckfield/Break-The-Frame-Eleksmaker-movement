@@ -22,7 +22,7 @@ The bed is 370mm by 250mm, so the gcode needs to fit into that area.  It's best 
 1. Click `Apply` to generate the Gcode
 1. Open the Gcode file in a text editor and remove the lines with `%` on them at the start and end of the file
 
-###Kirimoto
+### Kirimoto
 
 * [Kirimoto](https://grid.space/kiri/)
 1. Click 'Setup -> Machine' and select 'Laser'
